@@ -1,13 +1,17 @@
 import json
 from datetime import datetime
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, PackageLoader, select_autoescape
 import logging
 import re
 
 
 def generate_html(metadata, data):
-    env = Environment(loader=FileSystemLoader('.'))
-    template = env.get_template('template/layout.html')
+    env = Environment(
+        loader=PackageLoader('githubaudit', 'templates'),
+        autoescape=select_autoescape(['html'])
+    )
+
+    template = env.get_template('layout.html')
     output = template.render(metadata=metadata, repos=data)
 
     current_date = datetime.now().strftime("%Y-%m-%d")
