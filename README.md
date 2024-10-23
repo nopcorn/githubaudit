@@ -70,6 +70,12 @@ $ githubaudit --auth ghp_xxxxxxxxxxxxxxxxxxxx --target nso-group --output json
 }
 ```
 
+### HTML Output
+
+This is a render for a single repository. If run against an organization, you'll see all repositories in the table and will be able to search/filter through them.
+
+![lol](examples/rendered.png)
+
 ## Issues
 
 This tool will perform some basic checks to see if there are any issues that should be looked at. Currently supported issues are:
