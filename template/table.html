@@ -1,0 +1,83 @@
+<div class="table-responsive">
+    <table id="results" class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Repository</th>
+                <th>Tag</th>
+                <th>Branch Protection</th>
+                <th>Environments</th>
+                <th>CODEOWNERS</th>
+                <th>Secrets</th>
+                <th>Rulesets</th>
+                <th>Issues</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repo in repos %}
+                <tr>
+                    <td>
+                        <a href="{{ repo.url }}" target="_blank">{{ repo.name }}</a> 
+                        {% if not repo.private %}<i class='bx bxs-show' alt=""></i>{% endif %}
+                    </td>
+                    <td>
+                        {% for topic in repo.topics %}
+                            <span class="badge bg-secondary">{{ topic }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if repo.branch_protection.protected %}
+                            <span class="badge text-bg-success">{{ repo.branch_protection.default_branch }}</span>
+                        {% else %}
+                            <span class="badge text-bg-danger">{{ repo.branch_protection.default_branch }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for env in repo.environments %}
+                            <span class="badge {% if env.protection %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ env.name }}
+                            </span><br />
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if repo.codeowners.files | length >= 1 %}
+                            {% for file in repo.codeowners.files %}
+                                <span class="badge bg-success">{{ file }}</span>
+                            {% endfor %}
+                        {% else %}
+                            <span class="badge bg-danger">No</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if repo.secrets.keys() | list | length > 0 %}
+                            <div class="container">
+                                <pre class="bg-light p-3 border rounded">{{ repo.secrets_str }}</pre>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if repo.rulesets | length > 0 %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-danger">No</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if repo.issues | length > 0 %}
+                            {% for issue in repo.issues %}
+                                {% if issue.level == "high" %}
+                                    <i class='bx bxs-error text-danger'></i>&nbsp;{{ issue.message }}<br>
+                                {% elif issue.level == "medium" %}
+                                    <i class='bx bxs-error text-warning'></i>&nbsp;{{ issue.message }}<br>
+                                {% elif issue.level == "low" %}
+                                    <i class='bx bxs-error text-secondary'></i>&nbsp;{{ issue.message }}<br>
+                                {% else %}
+                                    {{ issue.message }}<br>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
