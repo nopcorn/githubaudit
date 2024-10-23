@@ -21,7 +21,9 @@ Current limitations:
 
 ## Installation
 
+To install `githubaudit` globally, simply `pip install githubaudit`.
 
+Installing within a virtual environment is recommended.
 
 ## Usage
 
