@@ -1,4 +1,4 @@
-# githubaudit
+# githubaudit  :flying_saucer:
 
 `githubaudit` is a powerful Python-based utility designed to perform comprehensive audits of GitHub organizations, users, or specific repositories. It provides insights into repository configurations, security settings, and potential vulnerabilities across your GitHub assets. 
 
